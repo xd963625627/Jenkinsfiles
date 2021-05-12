@@ -9,7 +9,7 @@ pipeline {
       steps {
         script {
           mvnHome = tool "maven3.6.3"
-          sh "${mvnHome/bin/mvn -v}"
+          sh "${mvnHome}/bin/mvn -v"
         }
       }
     }
