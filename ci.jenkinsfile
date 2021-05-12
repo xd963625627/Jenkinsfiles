@@ -1,0 +1,17 @@
+pipeline {
+  agent { 
+    node { 
+      label "master"
+    }
+  }
+  stages {
+    stage("build") {
+      steps {
+        script {
+          mvnHome = tool "maven3.6.3"
+          sh "${mvnHome/bin/mvn -v}"
+        }
+      }
+    }
+  }
+}
