@@ -10,11 +10,18 @@ pipeline {
   }
    
   stages {
-    stage("build") {
+    stage("maven build") {
       steps {
         script {
           mvnHome = tool "maven3.6.3"
           sh "${mvnHome}/bin/mvn ${buildShell}"
+        }
+      }
+    stage("npm build") {
+      steps {
+        script {
+          nodeHome = tool "node"
+          sh "${nodeHome}/bin/npm ${buildShell}"
         }
       }
     }
