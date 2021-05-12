@@ -17,6 +17,8 @@ pipeline {
           sh "${mvnHome}/bin/mvn ${buildShell}"
         }
       }
+    }
+    
     stage("npm build") {
       steps {
         script {
@@ -26,4 +28,5 @@ pipeline {
       }
     }
   }
+    
 }
