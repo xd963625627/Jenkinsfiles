@@ -62,13 +62,14 @@ pipeline {
       script {
         println("failure")
         gitlab.ChangeCommitStatus(projectId,commitSha,"failed")
+        toemail.Email("流水线执行失败", userEmail)
       }
     }
     aborted {
       script {
         println("aborted")
         gitlab.ChangeCommitStatus(projectId,commitSha,"canceled")
-      }
+        toemail.Email("流水线执行取消", userEmail)
     }
   }
     
