@@ -70,7 +70,7 @@ pipeline {
         println("aborted")
         gitlab.ChangeCommitStatus(projectId,commitSha,"canceled")
         toemail.Email("流水线执行取消", userEmail)
+      }
     }
   }
-    
 }
