@@ -4,6 +4,7 @@
 def build = new org.devops.build()
 def deploy = new org.devops.deploy()
 def tools = new org.devops.tools()
+def gitlab = new org.devops.gitlab()
 // env
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
@@ -14,6 +15,7 @@ String branchName = "${env.branchName}"
 if("${runOpts}" == "GitlabPush") {
   branchName = branch - "refs/heads/"
   currentBuild.description = "Trigger by ${userName} ${branch}"
+  gitlab.ChangeCommitStatus(projectId,commitSha,"running")
 }
 pipeline {
   agent { 
@@ -51,16 +53,19 @@ pipeline {
     success {
       script {
         println("success")
+        gitlab.ChangeCommitStatus(projectId,commitSha,"success")
       }
     }
     failure {
       script {
         println("failure")
+        gitlab.ChangeCommitStatus(projectId,commitSha,"failed")
       }
     }
     aborted {
       script {
-        println("aborted") 
+        println("aborted")
+        gitlab.ChangeCommitStatus(projectId,commitSha,"canceled")
       }
     }
   }
