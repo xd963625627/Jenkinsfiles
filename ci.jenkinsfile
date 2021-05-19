@@ -42,5 +42,27 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      script {
+        println("always")
+      }
+    }
+    success {
+      script {
+        println("success")
+      }
+    }
+    failure {
+      script {
+        println("failure")
+      }
+    }
+    aborted {
+      script {
+        println("aborted") 
+      }
+    }
+  }
     
 }
