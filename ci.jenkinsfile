@@ -12,11 +12,11 @@ String buildType = "${env.buildType}"
 String deployHosts = "${env.deployHosts}"
 String srcUrl = "${env.srcUrl}"
 String branchName = "${env.branchName}"
-
+String gitServer = "${env.gitServer}"
 if("${runOpts}" == "GitlabPush") {
   branchName = branch - "refs/heads/"
   currentBuild.description = "Trigger by ${userName} ${branch}"
-  gitlab.ChangeCommitStatus(projectId,commitSha,"running")
+  gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"running")
 }
 pipeline {
   agent { 
@@ -54,21 +54,21 @@ pipeline {
     success {
       script {
         println("success")
-        gitlab.ChangeCommitStatus(projectId,commitSha,"success")
+        gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"success")
         toemail.Email("流水线执行成功", userEmail)
       }
     }
     failure {
       script {
         println("failure")
-        gitlab.ChangeCommitStatus(projectId,commitSha,"failed")
+        gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"failed")
         toemail.Email("流水线执行失败", userEmail)
       }
     }
     aborted {
       script {
         println("aborted")
-        gitlab.ChangeCommitStatus(projectId,commitSha,"canceled")
+        gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"canceled")
         toemail.Email("流水线执行取消", userEmail)
       }
     }
