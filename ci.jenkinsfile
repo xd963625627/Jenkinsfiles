@@ -49,7 +49,8 @@ pipeline {
       steps {
         script {
             tools.PrintMes('代码扫描', "green")
-            sonar.SonarScan("${JOB_NAME}","${JOB_NAME}","src")
+            // sonar.SonarScan("${JOB_NAME}","${JOB_NAME}","src")
+            sonar.SonarScanInJenkins("${JOB_NAME}","${JOB_NAME}","src")
         }
       }
     }
