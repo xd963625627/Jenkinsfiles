@@ -64,7 +64,9 @@ pipeline {
     success {
       script {
         println("success")
-        gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"success")
+        if(${runOpts} === "GitlabPush") {
+          gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"success")
+        }
         toemail.Email("流水线执行成功", userEmail)
       }
     }
