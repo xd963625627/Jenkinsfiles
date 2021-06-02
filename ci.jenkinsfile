@@ -7,6 +7,7 @@ def tools = new org.devops.tools()
 def gitlab = new org.devops.gitlab()
 def toemail = new org.devops.toemail()
 def sonar = new org.devops.sonarqube()
+def sonarapi = new org.devops.sonarapi()
 // env
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
@@ -14,6 +15,7 @@ String deployHosts = "${env.deployHosts}"
 String srcUrl = "${env.srcUrl}"
 String branchName = "${env.branchName}"
 String gitServer = "${env.gitServer}"
+String sonarServer = "${env.sonarServer}"
 if("${runOpts}" == "GitlabPush") {
   branchName = branch - "refs/heads/"
   currentBuild.description = "Trigger by ${userName} ${branch}"
@@ -48,9 +50,16 @@ pipeline {
     stage("QA") {
       steps {
         script {
-            tools.PrintMes('代码扫描', "green")
-            // sonar.SonarScan("${JOB_NAME}","${JOB_NAME}","src")
-            sonar.SonarScanInJenkins("${JOB_NAME}","${JOB_NAME}","src")
+          tools.PrintMes('代码扫描', "green")
+          // sonar.SonarScan("${JOB_NAME}","${JOB_NAME}","src")
+          sonar.SonarScanInJenkins("${JOB_NAME}","${JOB_NAME}","src")
+          tools.PrintMes('获取扫描结果', "green")
+          result = sonar.GetProjectStatus(sonarServer,${JOB_NAME})
+          println(result)
+          if (result.toString().contains("ERROR")) {
+            error "代码质量阈超标，请及时修复"
+          }
+          
         }
       }
     }
