@@ -59,9 +59,9 @@ pipeline {
           //println("${JOB_NAME}")
           //result = sonarapi.GetProjectStatus(sonarServer,"${JOB_NAME}")
           //println(result)
-          if (result.toString().contains("ERROR")) {
-            error "代码质量阈超标，请及时修复"
-          }
+          //if (result.toString().contains("ERROR")) {
+            //error "代码质量阈超标，请及时修复"
+          //}
           
         }
       }
