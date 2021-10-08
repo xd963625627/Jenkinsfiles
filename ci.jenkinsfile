@@ -23,11 +23,11 @@ if("${runOpts}" == "GitlabPush") {
 //   gitlab.ChangeCommitStatus(gitServer,projectId,commitSha,"running")
 }
 pipeline {
-//   agent { 
-//     node { 
-//       label "master"
-//     }
-//   }
+  agent { 
+    node { 
+      label "Built-In Node"
+    }
+  }
    
   stages {
     stage("CheckOut") {
