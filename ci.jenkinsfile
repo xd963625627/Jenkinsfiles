@@ -36,7 +36,7 @@ pipeline {
           println("${branchName}")
           tools.PrintMes('获取代码', "green")
           // 注意要修改这里credentialsId 重新生成流水线语法
-          checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-ssh', url: "${srcUrl}"]]])
+          checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], extensions: [], userRemoteConfigs: [[credentialsId: 'github-ssh', url: "${srcUrl}"]]])
           // checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], extensions: [], userRemoteConfigs: [[credentialsId: '1bf507af-c920-41b1-beea-d3b191af9cd4', url: "${srcUrl}"]]])
         }
       }
